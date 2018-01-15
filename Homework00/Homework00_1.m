@@ -6,6 +6,9 @@
 clear all
 clc
 
+format shortEng
+format compact
+
 VDD = 10; vo = 5;
 CB = 0.1e-6;
 R = 15e3; RL = 10e6; RG = 10e6;
@@ -27,4 +30,22 @@ ID1 = ID2;
 Vov1 = sqrt(ID1/Kn);
 VSG1 = Vov1+VTn;
 
-VGS3 = VG3-VDD
+VGS3 = VG3-VDD;
+
+gm1 = 2*ID1/Vov1;
+gm2 = 2*ID2/Vov2;
+gm3 = 2*ID3/Vov3;
+
+ro1 = 1/(Lambdan*ID1);
+ro2 = 1/(Lambdap*ID2);
+ro3 = 1/(Lambdap*ID3);
+
+go1 = 1/ro1;
+go2 = 1/ro2;
+go3 = 1/ro3;
+
+%Part B
+Av = -gm1/(GL+go1+go2);
+Avdb = 20*log10(abs(Av));
+
+Ro = 1/(go1+go2);
