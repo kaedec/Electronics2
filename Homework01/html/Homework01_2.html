@@ -1,0 +1,270 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Homework01_2</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-01-25"><meta name="DC.source" content="Homework01_2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Constant Declarations</a></li><li><a href="#3">Part A</a></li><li><a href="#4">Part B</a></li><li><a href="#5">Part C</a></li></ul></div><pre class="codeinput"><span class="comment">%Katelyn Charbonneau</span>
+<span class="comment">%EE320 Homework 01 Problem 2</span>
+
+clear
+clc
+
+format <span class="string">shortEng</span>
+format <span class="string">compact</span>
+</pre><h2 id="2">Constant Declarations</h2><pre class="codeinput">VDD = 10;
+Kn = 270e-6; VTn = 0.573; Lambdan = 0.0165;
+Kp = 88e-6; VTp = -0.647; Lambdap = 0.0219;
+VS1 = 0;
+VS4 = VDD;
+ID = 500e-6;
+
+sim_ID1 = 507.5e-06; sim_ID2 = 507.5e-06;
+sim_ID3 = 507.5e-06; sim_ID4 = 507.5e-06;
+sim_VGS1 = 1.9478;
+sim_VGS2 = 2.134;
+sim_VGS3 = -3.425;
+sim_VGS4 = -3.031;
+</pre><h2 id="3">Part A</h2><p>DC Values</p><pre class="codeinput">Vovn = sqrt(ID/Kn);
+Vovp = -sqrt(ID/Kp);
+
+VG1 = VTn + Vovn + VS1;
+VS2 = Vovn;
+VG2 = VTn + Vovn + VS2;
+VG4 = VS4 - abs(VTp) - abs(Vovp);
+VS3 = VDD - abs(Vovp);
+VG3 = VS3 - abs(VTp) - abs(Vovp);
+
+VS1 = 0;
+VS4 = VDD;
+VS2 = VG2-Vovn-VTn;
+
+VD4 = VS4 - abs(Vovp);
+VS3 = VD4;
+VDS2 = Vovn;
+VSD3 = Vovp;
+VD2 = VDS2 + VS2;
+VD3 = VS3 + VSD3;
+VDS2 = VD2 - VS2;
+VDS3 = VD3 - VS3;
+VGS2 = VG2 - VS2;
+VGS3 = VG3 - VS3;
+VGS4 = VG4 - VS4;
+
+gm = [2*ID/Vovn, 2*ID/Vovn, 2*ID/abs(Vovp), 2*ID/abs(Vovp)];
+go = [Lambdan*ID, Lambdan*ID, Lambdap*ID, Lambdap*ID];
+ro = 1./go;
+</pre><h2 id="4">Part B</h2><p>AC Values</p><pre class="codeinput">Rin4 = ro(4);
+Gin4 = 1/Rin4;
+
+Rin3 = (gm(3)+go(3)+go(4))/(go(4)*go(3));
+Gin3 = 1/Rin3;
+
+Gin2 = (Gin3*(gm(2)+go(2)))/(Gin3+go(2));
+Rin2 = 1/Gin2;
+
+Gm1 = -gm(1);
+Go1 = go(1)+Gin2;
+
+Gm2 = gm(2)+go(2);
+Go2 = go(2)+Gin3;
+
+Ro1 = 1/Go1; Ro2 = 1/Go2;
+
+Avo = Gm1*Ro1*Gm2*Ro2;
+Avodb = 20*log10(abs(Avo));
+
+<span class="comment">% For calculating Ro</span>
+Gin3_Ro = Gin3;
+Rin2_Ro = (gm(2)+go(2)+go(1))/(go(1)*go(2));
+Gin2_Ro = 1/Rin2_Ro;
+
+Go = Gin3_Ro + Gin2_Ro;
+Ro = 1/Go;
+</pre><h2 id="5">Part C</h2><p>Simulation Values</p><pre class="codeinput">sim_Av = -1485.5;
+sim_Avdb = 20*log10(abs(sim_Av));
+
+sim_Vov1 = sim_VGS1 - abs(VTn);
+sim_Vov2 = sim_VGS2 - abs(VTn);
+sim_Vov3 = -sim_VGS3 - abs(VTp);
+sim_Vov4 = -sim_VGS4 - abs(VTp);
+
+sim_ro1 = 1/(Lambdan*sim_ID1);
+sim_ro2 = 1/(Lambdan*sim_ID2);
+sim_ro3 = 1/(Lambdap*sim_ID3);
+sim_ro4 = 1/(Lambdap*sim_ID4);
+
+sim_go1 = 1/sim_ro1;
+sim_go2 = 1/sim_ro2;
+sim_go3 = 1/sim_ro3;
+sim_go4 = 1/sim_ro4;
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Katelyn Charbonneau
+%EE320 Homework 01 Problem 2
+
+clear
+clc
+
+format shortEng
+format compact
+
+%% Constant Declarations
+VDD = 10;
+Kn = 270e-6; VTn = 0.573; Lambdan = 0.0165;
+Kp = 88e-6; VTp = -0.647; Lambdap = 0.0219;
+VS1 = 0;
+VS4 = VDD;
+ID = 500e-6;
+
+sim_ID1 = 507.5e-06; sim_ID2 = 507.5e-06;
+sim_ID3 = 507.5e-06; sim_ID4 = 507.5e-06;
+sim_VGS1 = 1.9478;
+sim_VGS2 = 2.134;
+sim_VGS3 = -3.425;
+sim_VGS4 = -3.031;
+
+%% Part A
+% DC Values
+Vovn = sqrt(ID/Kn);
+Vovp = -sqrt(ID/Kp);
+
+VG1 = VTn + Vovn + VS1;
+VS2 = Vovn;
+VG2 = VTn + Vovn + VS2;
+VG4 = VS4 - abs(VTp) - abs(Vovp);
+VS3 = VDD - abs(Vovp);
+VG3 = VS3 - abs(VTp) - abs(Vovp);
+
+VS1 = 0;
+VS4 = VDD;
+VS2 = VG2-Vovn-VTn;
+
+VD4 = VS4 - abs(Vovp);
+VS3 = VD4;
+VDS2 = Vovn;
+VSD3 = Vovp;
+VD2 = VDS2 + VS2;
+VD3 = VS3 + VSD3;
+VDS2 = VD2 - VS2;
+VDS3 = VD3 - VS3;
+VGS2 = VG2 - VS2;
+VGS3 = VG3 - VS3;
+VGS4 = VG4 - VS4;
+
+gm = [2*ID/Vovn, 2*ID/Vovn, 2*ID/abs(Vovp), 2*ID/abs(Vovp)];
+go = [Lambdan*ID, Lambdan*ID, Lambdap*ID, Lambdap*ID];
+ro = 1./go;
+%% Part B
+% AC Values
+Rin4 = ro(4);
+Gin4 = 1/Rin4;
+
+Rin3 = (gm(3)+go(3)+go(4))/(go(4)*go(3));
+Gin3 = 1/Rin3;
+
+Gin2 = (Gin3*(gm(2)+go(2)))/(Gin3+go(2));
+Rin2 = 1/Gin2;
+
+Gm1 = -gm(1);
+Go1 = go(1)+Gin2;
+
+Gm2 = gm(2)+go(2);
+Go2 = go(2)+Gin3;
+
+Ro1 = 1/Go1; Ro2 = 1/Go2;
+
+Avo = Gm1*Ro1*Gm2*Ro2;
+Avodb = 20*log10(abs(Avo));
+
+% For calculating Ro
+Gin3_Ro = Gin3;
+Rin2_Ro = (gm(2)+go(2)+go(1))/(go(1)*go(2));
+Gin2_Ro = 1/Rin2_Ro;
+
+Go = Gin3_Ro + Gin2_Ro;
+Ro = 1/Go;
+
+%% Part C
+% Simulation Values
+sim_Av = -1485.5;
+sim_Avdb = 20*log10(abs(sim_Av));
+
+sim_Vov1 = sim_VGS1 - abs(VTn);
+sim_Vov2 = sim_VGS2 - abs(VTn);
+sim_Vov3 = -sim_VGS3 - abs(VTp);
+sim_Vov4 = -sim_VGS4 - abs(VTp);
+
+sim_ro1 = 1/(Lambdan*sim_ID1);
+sim_ro2 = 1/(Lambdan*sim_ID2);
+sim_ro3 = 1/(Lambdap*sim_ID3);
+sim_ro4 = 1/(Lambdap*sim_ID4);
+
+sim_go1 = 1/sim_ro1;
+sim_go2 = 1/sim_ro2;
+sim_go3 = 1/sim_ro3;
+sim_go4 = 1/sim_ro4;
+##### SOURCE END #####
+--></body></html>
