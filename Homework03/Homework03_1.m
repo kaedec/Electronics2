@@ -47,3 +47,96 @@ Print_Header("gm and ro/go")
 gm1 = 2*ID1/Vov1
 ro1 = VAn/ID1
 go1 = 1/ro1
+
+Print_Header("RD and RS")
+
+ro3 = ro1;
+ro4 = ro1;
+ro2 = ro1;
+go2 = 1/ro2;
+gm2 = gm1;
+RD = ro4
+GD = 1/RD;
+ro5a = ro1; ro5b = ro1;
+go5a = 1/ro5a; go5b = 1/ro5b;
+GS = go5a+go5b;
+RS = 1/GS
+
+%% Superposition Method
+
+Print_Header("Superposition")
+Print_Header("Ap")
+
+GinS2 = (GD * (gm2 + go2)) / (go2 + GD);
+GS1 = GinS2 + GS;
+
+Gm1 = (gm1*GD)/(go1+GD);
+
+Go1prime = (GD * (gm1 + go1)) / (go1 + GD);
+Go1 = Go1prime + GS1;
+Ro1 = 1/Go1;
+
+Gm2 = gm2 + go2;
+Go2 = go2 + GD;
+Ro2 = 1/Go2;
+
+Ap = Gm1*Ro1*Gm2*Ro2
+Ap_dB = 20*log10(abs(Ap))
+
+Print_Header("An")
+
+GinS1 = (GD * (gm1 + go1)) / (go1 + GD);
+GS2 = GS + GinS1;
+
+Gm3 = (-gm2 * GS2) / (gm2 + go2 + GS2);
+
+Go3prime = (go2 * GS2) / (gm2 + go2 + GS2);
+Go3 = Go3prime + GD;
+Ro3 = 1/Go3;
+
+An = Gm3*Ro3
+An_dB = 20*log10(abs(An))
+
+Print_Header("Ad")
+
+Ad_Superposition = 1/2*(Ap-An)
+Ad_Superposition_dB = Convert_to_dB(Ad_Superposition)
+
+Print_Header("Acm")
+
+Acm_Superposition = Ap+An
+Acm_Superposition_dB = Convert_to_dB(Acm_Superposition)
+
+Print_Header("CMRR")
+
+CMRR_Superposition = Convert_to_dB(Ad_Superposition/abs(Acm_Superposition))
+
+%% Half-Circuit Method
+
+Print_Header("Half-Circuit")
+Print_Header("Ad")
+
+Gmd = -gm2;
+God = go2+GD;
+Rod = 1/God;
+
+Ad_HalfCircuit = -Gmd*Rod/2
+Ad_HalfCircuit_dB = Convert_to_dB(Ad_HalfCircuit)
+
+Print_Header("Acm")
+
+RS2 = 2*RS;
+GS2 = 1/RS2;
+
+Gmcm = (-gm2 * GS2) / (gm2 + go2 + GS2);
+
+Goprimecm = (go2 * GS2) / (gm2 + go2 + GS2);
+Gocm = Goprimecm + GD;
+Rocm = 1/Gocm;
+
+Acm_HalfCircuit = Gmcm*Rocm
+Acm_HalfCircuit_dB = Convert_to_dB(Acm_HalfCircuit)
+
+Print_Header("CMRR")
+
+CMRR_HalfCircuit = Convert_to_dB(Ad_HalfCircuit/abs(Acm_HalfCircuit))

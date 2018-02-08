@@ -49,7 +49,7 @@ go3 = 1/ro3;
 ro4 = 1/(Lambdap*ID4)
 go4 = 1/ro4;
 
-RD = ro3
+RD = ro4
 GD = 1/RD;
 
 %% DC Analysis - Q1 and Q2
@@ -67,20 +67,19 @@ go = 1/ro;
 
 %% Differential Mode Analysis
 
-Print_Header("Different Mode Gain")
+Print_Header("Differential Mode Gain")
 
-Gmd = -gm;
-God = go+GD;
-Rod = 1/God;
-
-Ad = -1/2*Gmd*Rod
+Gmd = gm;
+Rod = 1/(go+go4);
+Ad = Gmd*Rod
 Ad_dB = 20*log10(abs(Ad))
 
 %% Common Mode Analysis
 
 Print_Header("Common Mode Gain")
 
-GS = 1/(2*ro5);
+RS = 2*ro5;
+GS = 1/RS;
 Gmcm = (-gm*GS)/(gm+go+GS);
 Goprime = (go*GS)/(gm+go+GS);
 Gocm = Goprime+GD;
