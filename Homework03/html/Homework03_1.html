@@ -1,0 +1,428 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Homework03_1</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-02-08"><meta name="DC.source" content="Homework03_1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Constant Declarations</a></li><li><a href="#3">DC Analysis</a></li><li><a href="#4">Superposition Method</a></li><li><a href="#5">Half-Circuit Method</a></li></ul></div><pre class="codeinput"><span class="comment">%Katelyn Charbonneau</span>
+<span class="comment">%EE320 Homework 03 Problem 1</span>
+
+clear
+clc
+
+format <span class="string">shortEng</span>
+format <span class="string">compact</span>
+</pre><h2 id="2">Constant Declarations</h2><pre class="codeinput">R = 20e3; G = 1/R;
+VDD = 7.5; VSS = 7.5; mVSS = -7.5;
+Kn = 265e-6; Kp = 97.5e-6;
+Vtn = 0.65; Vtp = -0.65;
+VAn = 65; Lambdan = 1/VAn;
+VAp = -45; Lambdap = 1/VAp;
+
+VS6 = VDD; VS3 = VDD; VS4 = VDD;
+VS7 = mVSS; VS5A = mVSS; VS5B = mVSS;
+VI1 = 0; VI2 = 0;
+</pre><h2 id="3">DC Analysis</h2><pre class="codeinput">Print_Header(<span class="string">"Vov7/6 and ID7/6"</span>)
+
+a = Kn*R; b = 2; c = 2*Vtn-VDD-VSS;
+Vov7 = VovQuad(a,b,c)
+ID7 = Kn*Vov7^2
+Vov6 = -Vov7
+ID6 = Kn*Vov6^2
+
+Print_Header(<span class="string">"Q7/6 Terminal Voltages"</span>)
+
+VG7 = Vtn + Vov7 + mVSS
+VG6 = VDD - abs(Vtp) - abs(Vov6)
+
+Print_Header(<span class="string">"Q1/2 Terminal Voltages/Vov"</span>)
+
+ID1 = ID7; ID2 = ID7;
+Vov1 = sqrt(ID1/Kn)
+VS1 = -Vtn-Vov1
+Vov2 = Vov1; VS2 = VS1;
+
+Print_Header(<span class="string">"gm and ro/go"</span>)
+
+gm1 = 2*ID1/Vov1
+ro1 = VAn/ID1
+go1 = 1/ro1
+
+Print_Header(<span class="string">"RD and RS"</span>)
+
+ro3 = ro1;
+ro4 = ro1;
+ro2 = ro1;
+go2 = 1/ro2;
+gm2 = gm1;
+RD = ro4
+GD = 1/RD;
+ro5a = ro1; ro5b = ro1;
+go5a = 1/ro5a; go5b = 1/ro5b;
+GS = go5a+go5b;
+RS = 1/GS
+</pre><pre class="codeoutput">
+======= Vov7/6 and ID7/6 =======
+Vov7 =
+     1.4301e+000
+ID7 =
+   541.9882e-006
+Vov6 =
+    -1.4301e+000
+ID6 =
+   541.9882e-006
+
+======= Q7/6 Terminal Voltages =======
+VG7 =
+    -5.4199e+000
+VG6 =
+     5.4199e+000
+
+======= Q1/2 Terminal Voltages/Vov =======
+Vov1 =
+     1.4301e+000
+VS1 =
+    -2.0801e+000
+
+======= gm and ro/go =======
+gm1 =
+   757.9627e-006
+ro1 =
+   119.9288e+003
+go1 =
+     8.3383e-006
+
+======= RD and RS =======
+RD =
+   119.9288e+003
+RS =
+    59.9644e+003
+</pre><h2 id="4">Superposition Method</h2><pre class="codeinput">Print_Header(<span class="string">"Superposition"</span>)
+Print_Header(<span class="string">"Ap"</span>)
+
+GinS2 = (GD * (gm2 + go2)) / (go2 + GD);
+GS1 = GinS2 + GS;
+
+Gm1 = (gm1*GD)/(go1+GD);
+
+Go1prime = (GD * (gm1 + go1)) / (go1 + GD);
+Go1 = Go1prime + GS1;
+Ro1 = 1/Go1;
+
+Gm2 = gm2 + go2;
+Go2 = go2 + GD;
+Ro2 = 1/Go2;
+
+Ap = Gm1*Ro1*Gm2*Ro2
+Ap_dB = 20*log10(abs(Ap))
+
+Print_Header(<span class="string">"An"</span>)
+
+GinS1 = (GD * (gm1 + go1)) / (go1 + GD);
+GS2 = GS + GinS1;
+
+Gm3 = (-gm2 * GS2) / (gm2 + go2 + GS2);
+
+Go3prime = (go2 * GS2) / (gm2 + go2 + GS2);
+Go3 = Go3prime + GD;
+Ro3 = 1/Go3;
+
+An = Gm3*Ro3
+An_dB = 20*log10(abs(An))
+
+Print_Header(<span class="string">"Ad"</span>)
+
+Ad_Superposition = 1/2*(Ap-An)
+Ad_Superposition_dB = Convert_to_dB(Ad_Superposition)
+
+Print_Header(<span class="string">"Acm"</span>)
+
+Acm_Superposition = Ap+An
+Acm_Superposition_dB = Convert_to_dB(Acm_Superposition)
+
+Print_Header(<span class="string">"CMRR"</span>)
+
+CMRR_Superposition = Convert_to_dB(Ad_Superposition/abs(Acm_Superposition))
+</pre><pre class="codeoutput">
+======= Superposition =======
+
+======= Ap =======
+Ap =
+    22.2414e+000
+Ap_dB =
+    26.9432e+000
+
+======= An =======
+An =
+   -23.2094e+000
+An_dB =
+    27.3133e+000
+
+======= Ad =======
+Ad_Superposition =
+    22.7254e+000
+Ad_Superposition_dB =
+    27.1302e+000
+
+======= Acm =======
+Acm_Superposition =
+  -968.0517e-003
+Acm_Superposition_dB =
+  -282.0294e-003
+
+======= CMRR =======
+CMRR_Superposition =
+    27.4123e+000
+</pre><h2 id="5">Half-Circuit Method</h2><pre class="codeinput">Print_Header(<span class="string">"Half-Circuit"</span>)
+Print_Header(<span class="string">"Ad"</span>)
+
+Gmd = -gm2;
+God = go2+GD;
+Rod = 1/God;
+
+Ad_HalfCircuit = -Gmd*Rod/2
+Ad_HalfCircuit_dB = Convert_to_dB(Ad_HalfCircuit)
+
+Print_Header(<span class="string">"Acm"</span>)
+
+RS2 = 2*RS;
+GS2 = 1/RS2;
+
+Gmcm = (-gm2 * GS2) / (gm2 + go2 + GS2);
+
+Goprimecm = (go2 * GS2) / (gm2 + go2 + GS2);
+Gocm = Goprimecm + GD;
+Rocm = 1/Gocm;
+
+Acm_HalfCircuit = Gmcm*Rocm
+Acm_HalfCircuit_dB = Convert_to_dB(Acm_HalfCircuit)
+
+Print_Header(<span class="string">"CMRR"</span>)
+
+CMRR_HalfCircuit = Convert_to_dB(Ad_HalfCircuit/abs(Acm_HalfCircuit))
+</pre><pre class="codeoutput">
+======= Half-Circuit =======
+
+======= Ad =======
+Ad_HalfCircuit =
+    22.7254e+000
+Ad_HalfCircuit_dB =
+    27.1302e+000
+
+======= Acm =======
+Acm_HalfCircuit =
+  -968.0517e-003
+Acm_HalfCircuit_dB =
+  -282.0294e-003
+
+======= CMRR =======
+CMRR_HalfCircuit =
+    27.4123e+000
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Katelyn Charbonneau
+%EE320 Homework 03 Problem 1
+
+clear
+clc
+
+format shortEng
+format compact
+
+%% Constant Declarations
+
+R = 20e3; G = 1/R;
+VDD = 7.5; VSS = 7.5; mVSS = -7.5;
+Kn = 265e-6; Kp = 97.5e-6;
+Vtn = 0.65; Vtp = -0.65;
+VAn = 65; Lambdan = 1/VAn;
+VAp = -45; Lambdap = 1/VAp;
+
+VS6 = VDD; VS3 = VDD; VS4 = VDD;
+VS7 = mVSS; VS5A = mVSS; VS5B = mVSS;
+VI1 = 0; VI2 = 0;
+
+%% DC Analysis
+
+Print_Header("Vov7/6 and ID7/6")
+
+a = Kn*R; b = 2; c = 2*Vtn-VDD-VSS;
+Vov7 = VovQuad(a,b,c)
+ID7 = Kn*Vov7^2
+Vov6 = -Vov7
+ID6 = Kn*Vov6^2
+
+Print_Header("Q7/6 Terminal Voltages")
+
+VG7 = Vtn + Vov7 + mVSS
+VG6 = VDD - abs(Vtp) - abs(Vov6)
+
+Print_Header("Q1/2 Terminal Voltages/Vov")
+
+ID1 = ID7; ID2 = ID7;
+Vov1 = sqrt(ID1/Kn)
+VS1 = -Vtn-Vov1
+Vov2 = Vov1; VS2 = VS1;
+
+Print_Header("gm and ro/go")
+
+gm1 = 2*ID1/Vov1
+ro1 = VAn/ID1
+go1 = 1/ro1
+
+Print_Header("RD and RS")
+
+ro3 = ro1;
+ro4 = ro1;
+ro2 = ro1;
+go2 = 1/ro2;
+gm2 = gm1;
+RD = ro4
+GD = 1/RD;
+ro5a = ro1; ro5b = ro1;
+go5a = 1/ro5a; go5b = 1/ro5b;
+GS = go5a+go5b;
+RS = 1/GS
+
+%% Superposition Method
+
+Print_Header("Superposition")
+Print_Header("Ap")
+
+GinS2 = (GD * (gm2 + go2)) / (go2 + GD);
+GS1 = GinS2 + GS;
+
+Gm1 = (gm1*GD)/(go1+GD);
+
+Go1prime = (GD * (gm1 + go1)) / (go1 + GD);
+Go1 = Go1prime + GS1;
+Ro1 = 1/Go1;
+
+Gm2 = gm2 + go2;
+Go2 = go2 + GD;
+Ro2 = 1/Go2;
+
+Ap = Gm1*Ro1*Gm2*Ro2
+Ap_dB = 20*log10(abs(Ap))
+
+Print_Header("An")
+
+GinS1 = (GD * (gm1 + go1)) / (go1 + GD);
+GS2 = GS + GinS1;
+
+Gm3 = (-gm2 * GS2) / (gm2 + go2 + GS2);
+
+Go3prime = (go2 * GS2) / (gm2 + go2 + GS2);
+Go3 = Go3prime + GD;
+Ro3 = 1/Go3;
+
+An = Gm3*Ro3
+An_dB = 20*log10(abs(An))
+
+Print_Header("Ad")
+
+Ad_Superposition = 1/2*(Ap-An)
+Ad_Superposition_dB = Convert_to_dB(Ad_Superposition)
+
+Print_Header("Acm")
+
+Acm_Superposition = Ap+An
+Acm_Superposition_dB = Convert_to_dB(Acm_Superposition)
+
+Print_Header("CMRR")
+
+CMRR_Superposition = Convert_to_dB(Ad_Superposition/abs(Acm_Superposition))
+
+%% Half-Circuit Method
+
+Print_Header("Half-Circuit")
+Print_Header("Ad")
+
+Gmd = -gm2;
+God = go2+GD;
+Rod = 1/God;
+
+Ad_HalfCircuit = -Gmd*Rod/2
+Ad_HalfCircuit_dB = Convert_to_dB(Ad_HalfCircuit)
+
+Print_Header("Acm")
+
+RS2 = 2*RS;
+GS2 = 1/RS2;
+
+Gmcm = (-gm2 * GS2) / (gm2 + go2 + GS2);
+
+Goprimecm = (go2 * GS2) / (gm2 + go2 + GS2);
+Gocm = Goprimecm + GD;
+Rocm = 1/Gocm;
+
+Acm_HalfCircuit = Gmcm*Rocm
+Acm_HalfCircuit_dB = Convert_to_dB(Acm_HalfCircuit)
+
+Print_Header("CMRR")
+
+CMRR_HalfCircuit = Convert_to_dB(Ad_HalfCircuit/abs(Acm_HalfCircuit))
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,179 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>KC_E1_2</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-02-15"><meta name="DC.source" content="KC_E1_2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Constant Declarations</a></li><li><a href="#3">Differential Mode Calculations</a></li><li><a href="#4">Common Mode Calculations</a></li></ul></div><pre class="codeinput"><span class="comment">% Katelyn Charbonneau</span>
+<span class="comment">% EE320 Spring 2018 Exam 1 Problem 2</span>
+
+clear <span class="string">all</span>
+clc
+
+format <span class="string">compact</span>
+format <span class="string">shortEng</span>
+</pre><h2 id="2">Constant Declarations</h2><pre class="codeinput">gm1 = 375e-6; gm2 = 375e-6;
+gm3 = 650e-6; gm4 = 650e-6;
+gm5 = 30000e-6; gm6 = 30000e-6;
+
+go1 = 8.5e-6; go2 = 8.5e-6;
+go3 = 6.25e-6; go4 = 6.25e-6;
+go5 = 30.5e-6; go6 = 30.5e-6;
+
+ro1 = 117.65e3; ro2 = 117.65e3;
+ro3 = 160e3; ro4 = 160e3;
+ro5 = 32.787e3; ro6 = 32.787e3;
+
+gpi5 = 400e-6; gpi6 = 400e-6;
+rpi5 = 2.5e3; rpi6 = 2.5e3;
+</pre><h2 id="3">Differential Mode Calculations</h2><pre class="codeinput">God = go2 + go4;
+Rod = 1/God;
+Gmd = gm2;
+
+Ad = Gmd*Rod
+Ad_dB = 20*log10(abs(Ad))
+</pre><pre class="codeoutput">Ad =
+    25.4237e+000
+Ad_dB =
+    28.1048e+000
+</pre><h2 id="4">Common Mode Calculations</h2><pre class="codeinput">RD2 = ro4; GD2 = go4;
+
+Rin5 = ro5;
+RS2 = 2*Rin5;
+GS2 = 1/RS2;
+
+Goprime = (go2 * GS2) / (gm2 + go2 + GS2);
+Gocm = Goprime + GD2;
+Rocm = 1/Gocm;
+
+Gmcm = (-gm2 * GS2) / (gm2 + go2 + GS2);
+
+Acm = Gmcm*Rocm
+Acm_dB = 20*log10(abs(Acm))
+
+CMRR = 20*log10(Ad/abs(Acm))
+</pre><pre class="codeoutput">Acm =
+    -2.1812e+000
+Acm_dB =
+     6.7740e+000
+CMRR =
+    21.3308e+000
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Katelyn Charbonneau
+% EE320 Spring 2018 Exam 1 Problem 2
+
+clear all
+clc
+
+format compact
+format shortEng
+
+%% Constant Declarations
+
+gm1 = 375e-6; gm2 = 375e-6;
+gm3 = 650e-6; gm4 = 650e-6;
+gm5 = 30000e-6; gm6 = 30000e-6;
+
+go1 = 8.5e-6; go2 = 8.5e-6;
+go3 = 6.25e-6; go4 = 6.25e-6;
+go5 = 30.5e-6; go6 = 30.5e-6;
+
+ro1 = 117.65e3; ro2 = 117.65e3;
+ro3 = 160e3; ro4 = 160e3;
+ro5 = 32.787e3; ro6 = 32.787e3;
+
+gpi5 = 400e-6; gpi6 = 400e-6;
+rpi5 = 2.5e3; rpi6 = 2.5e3;
+
+%% Differential Mode Calculations
+
+God = go2 + go4;
+Rod = 1/God;
+Gmd = gm2;
+
+Ad = Gmd*Rod
+Ad_dB = 20*log10(abs(Ad))
+
+%% Common Mode Calculations
+
+RD2 = ro4; GD2 = go4;
+
+Rin5 = ro5;
+RS2 = 2*Rin5;
+GS2 = 1/RS2;
+
+Goprime = (go2 * GS2) / (gm2 + go2 + GS2);
+Gocm = Goprime + GD2;
+Rocm = 1/Gocm;
+
+Gmcm = (-gm2 * GS2) / (gm2 + go2 + GS2);
+
+Acm = Gmcm*Rocm
+Acm_dB = 20*log10(abs(Acm))
+
+CMRR = 20*log10(Ad/abs(Acm))
+##### SOURCE END #####
+--></body></html>

@@ -45,9 +45,11 @@ Print_Header("ro3 and ro4")
 
 ro3 = 1/(Lambdap*ID3)
 go3 = 1/ro3;
+gm3 = 2*ID3/Vov3;
 
 ro4 = 1/(Lambdap*ID4)
 go4 = 1/ro4;
+gm4 = 2*ID4/Vov4;
 
 RD = ro4
 GD = 1/RD;
@@ -82,7 +84,10 @@ RS = 2*ro5;
 GS = 1/RS;
 Gmcm = (-gm*GS)/(gm+go+GS);
 Goprime = (go*GS)/(gm+go+GS);
-Gocm = Goprime+GD;
+
+GDcm = gm4 + go4;
+
+Gocm = Goprime+GDcm;
 Rocm = 1/Gocm;
 
 Acm = Gmcm*Rocm
