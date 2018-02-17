@@ -1,5 +1,5 @@
 %Katelyn Charbonneau
-%EE320 Project 1
+%EE320 Spring 2018 Project 1
 
 clear
 clc
@@ -7,7 +7,7 @@ clc
 format shortEng
 format compact
 
-%% Constant Declaration
+%% Constant Declarations
 
 VDD = 2.5; VSS = 2.5; mVSS = -2.5;
 VO = 0;
@@ -53,7 +53,7 @@ gm1 = 2*ID1/Vov1;
 go1 = Lambdan*ID1;
 go2 = Lambdap*ID2;
 GD1 = go2;
-Go1 = go1 + GD1;
+Go1 = go1 + GD1; %#ok<*NASGU>
 
 Gm1 = -gm1;
 
@@ -189,11 +189,13 @@ Print_Header("ID3/4 and Vov3/4")
 
 WidthRatio = W3/W5;
 
-ID3 = WidthRatio*W5
-ID4 = WidthRatio*W5
+Vov4 = Vov2
+ID4 = kp*(W4/L)/2*Vov4^2
+
+ID3 = ID4
 
 Vov3 = sqrt((2*ID3)/(kp*(W3/L)))
-Vov4 = sqrt((2*ID4)/(kp*(W4/L)))
+
 
 %% Power Calculations - Third Iteration
 
@@ -204,7 +206,7 @@ PowerConsumed = TotalCurrent*(VDD+VSS)
 
 Print_Header("Third Iteration Gain")
 
-% Calculate the gains again with new IDs and Vovs
+%% Calculate the gains again with new IDs and Vovs
 
 gm1 = 2*ID1/Vov1;
 go1 = Lambdan*ID1;
@@ -232,6 +234,41 @@ Av_dB = Convert_to_dB(Av)
 Print_Header("Difference between Avo and Av")
 
 Gain_Delta = Av1_dB - Av_dB
+
+%% Output Resistance
+
+Print_Header("Ro")
+
+go4 = Lambdap*ID4; go3 = Lambdap*ID3;
+ro4 = 1/go4; ro3 = 1/go3;
+
+R2 = ro4; G2 = go4; G2 = 1/R2;
+G1 = gm3 + go3; R1 = 1/G1;
+
+Go = G1 + G2;
+Ro = 1/Go
+
+%% Leftover DC Voltages and Small Signal Parameters
+
+%Print_Header("Leftover Values")
+
+VG5 = VDD - abs(Vov5) - abs(Vtp);
+
+VG3 = 0 - abs(Vov3) - abs(Vtp);
+
+gm_calc = [gm1;
+           2*ID2/Vov2;
+           gm3;
+           2*ID4/Vov4;
+           2*ID5/Vov5];
+
+go_calc = [go1;
+           go2;
+           go3;
+           go4;
+           Lambdap*ID5];
+
+ro_calc = 1./go_calc;
 
 %% Summary for Cadence
 
