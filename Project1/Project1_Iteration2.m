@@ -7,6 +7,7 @@ clc
 format shortEng
 format compact
 
+load("Constants.mat")
 load("Iteration1.mat")
 
 %% Second Iteration Values
@@ -63,7 +64,7 @@ PowerConsumed = TotalCurrent*(VDD+VSS)
 Print_Header("R Value")
 
 R_Exact = (VDD+VSS-Vov5-abs(Vtp))/(ID5)
-R = 78e3
+R = 80e3
 G = 1/R;
 
 save("Iteration2.mat")

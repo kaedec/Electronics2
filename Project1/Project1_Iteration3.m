@@ -7,13 +7,14 @@ clc
 format shortEng
 format compact
 
+load("Constants.mat")
 load("Iteration2.mat")
 
 %% Third Iterations
 
 a = R*kp*(W5/L)/2;
 b = 1;
-c = -VDD-VSS;
+c = -VDD-VSS+abs(Vtp);
 
 Vov5 = VovQuad(a,b,c)
 ID5 = kp*(W5/L)/2*Vov5^2
@@ -88,7 +89,7 @@ Print_Header("Ro")
 go4 = Lambdap*ID4; go3 = Lambdap*ID3;
 ro4 = 1/go4; ro3 = 1/go3;
 
-R2 = ro4; G2 = go4; G2 = 1/R2;
+R2 = ro4; G2 = 1/R2;
 G1 = gm3 + go3; R1 = 1/G1;
 
 Go = G1 + G2;
@@ -129,9 +130,9 @@ fprintf('VI = %f\n', VI)
 
 Print_Header("Leftover Values")
 
-VG5 = VDD - abs(Vov5) - abs(Vtp);
+VG5 = VDD - abs(Vov5) - abs(Vtp)
 
-VG3 = 0 - abs(Vov3) - abs(Vtp);
+VG3 = 0 - abs(Vov3) - abs(Vtp)
 
 gm_calc = [gm1;
            2*ID2/Vov2;

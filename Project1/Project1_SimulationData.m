@@ -13,9 +13,9 @@ load("Constants.mat")
 
 Print_Header("Simulation Gain Results in dB")
 
-Av1_sim = 201.33;
-Av2_sim = 0.8850;
-Av_sim = 178.19;
+Av1_sim = 187.0913;
+Av2_sim = 0.8906;
+Av_sim = 166.6144;
 
 Av1_sim_dB = Convert_to_dB(Av1_sim);
 Av2_sim_dB = Convert_to_dB(Av2_sim);
@@ -32,7 +32,7 @@ fprintf('|Avo-Av| = %f\n', Gain_Delta_sim)
 
 Print_Header("Simulation ro")
 
-ID_sim = [44.17e-6	44.17e-6	147.9e-6	147.9e-6	41.66e-6];
+ID_sim = [51.21e-6  51.21e-6    171.4e-6	171.4e-6	47.6e-6];
 
 ro_sim = 1./[Lambdan*ID_sim(1);
              Lambdap*ID_sim(2);
