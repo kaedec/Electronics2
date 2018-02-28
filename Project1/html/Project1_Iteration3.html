@@ -1,0 +1,442 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Project1_Iteration3</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-02-26"><meta name="DC.source" content="Project1_Iteration3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Third Iterations</a></li><li><a href="#3">Other Current and Vov Values</a></li><li><a href="#4">Power Calculations - Third Iteration</a></li><li><a href="#5">Calculate the gains again with new IDs and Vovs</a></li><li><a href="#6">Output Resistance</a></li><li><a href="#7">Summary for Cadence</a></li><li><a href="#8">Summary</a></li><li><a href="#9">Leftover DC Voltages and Small Signal Parameters</a></li></ul></div><pre class="codeinput"><span class="comment">%Katelyn Charbonneau</span>
+<span class="comment">%EE320 Spring 2018 Project 1 Iteration 3</span>
+
+clear
+clc
+
+format <span class="string">shortEng</span>
+format <span class="string">compact</span>
+
+load(<span class="string">"Constants.mat"</span>)
+load(<span class="string">"Iteration2.mat"</span>)
+</pre><h2 id="2">Third Iterations</h2><pre class="codeinput">a = R*kp*(W5/L)/2;
+b = 1;
+c = -VDD-VSS+abs(Vtp);
+
+Vov5 = VovQuad(a,b,c)
+ID5 = kp*(W5/L)/2*Vov5^2
+</pre><pre class="codeoutput">Vov5 =
+   389.8239e-003
+ID5 =
+    47.5297e-006
+</pre><h2 id="3">Other Current and Vov Values</h2><p>Because W5 = W1 = W2, the branches will have the same current</p><pre class="codeinput">Print_Header(<span class="string">"ID1/2 and Vov1/2"</span>)
+
+ID1 = ID5
+ID2 = ID5
+
+Vov1 = sqrt((2*ID1)/(kn*(W1/L)))
+Vov2 = sqrt((2*ID2)/(kp*(W2/L)))
+
+<span class="comment">% Use the Ratio of W3/4 : W5</span>
+
+Print_Header(<span class="string">"ID3/4 and Vov3/4"</span>)
+
+WidthRatio = W3/W5;
+
+Vov4 = Vov2
+ID4 = kp*(W4/L)/2*Vov4^2
+
+ID3 = ID4
+
+Vov3 = sqrt((2*ID3)/(kp*(W3/L)))
+</pre><pre class="codeoutput">
+======= ID1/2 and Vov1/2 =======
+ID1 =
+    47.5297e-006
+ID2 =
+    47.5297e-006
+Vov1 =
+   256.2798e-003
+Vov2 =
+   389.8239e-003
+
+======= ID3/4 and Vov3/4 =======
+Vov4 =
+   389.8239e-003
+ID4 =
+   163.8955e-006
+ID3 =
+   163.8955e-006
+Vov3 =
+   389.8239e-003
+</pre><h2 id="4">Power Calculations - Third Iteration</h2><pre class="codeinput">Print_Header(<span class="string">"Power Consumption - Third Iteration"</span>)
+
+TotalCurrent = ID1+ID3+ID5
+PowerConsumed = TotalCurrent*(VDD+VSS)
+
+Print_Header(<span class="string">"Third Iteration Gain"</span>)
+</pre><pre class="codeoutput">
+======= Power Consumption - Third Iteration =======
+TotalCurrent =
+   258.9549e-006
+PowerConsumed =
+     1.2948e-003
+
+======= Third Iteration Gain =======
+</pre><h2 id="5">Calculate the gains again with new IDs and Vovs</h2><pre class="codeinput">gm1 = 2*ID1/Vov1;
+go1 = Lambdan*ID1;
+go2 = Lambdap*ID2;
+GD1 = go2;
+Go1 = go1 + GD1;
+
+Gm1 = -gm1;
+
+Av1 = Gm1/Go1
+Av1_dB = Convert_to_dB(Av1)
+
+Print_Header(<span class="string">"Stage 2 Gain"</span>)
+
+gm3 = 2*ID3/Vov3;
+
+Av2 = gm3/(gm3+GL)
+Av2_dB = Convert_to_dB(Av2)
+
+Print_Header(<span class="string">"Gain of Both Stages"</span>)
+
+Av = Av1*Av2
+Av_dB = Convert_to_dB(Av)
+
+Print_Header(<span class="string">"Difference between Avo and Av"</span>)
+
+Gain_Delta = Av1_dB - Av_dB
+</pre><pre class="codeoutput">Av1 =
+  -179.6164e+000
+Av1_dB =
+    45.0869e+000
+
+======= Stage 2 Gain =======
+Av2 =
+   893.7153e-003
+Av2_dB =
+  -976.0157e-003
+
+======= Gain of Both Stages =======
+Av =
+  -160.5259e+000
+Av_dB =
+    44.1109e+000
+
+======= Difference between Avo and Av =======
+Gain_Delta =
+   976.0157e-003
+</pre><h2 id="6">Output Resistance</h2><pre class="codeinput">Print_Header(<span class="string">"Ro"</span>)
+
+go4 = Lambdap*ID4; go3 = Lambdap*ID3;
+ro4 = 1/go4; ro3 = 1/go3;
+
+R2 = ro4; G2 = 1/R2;
+G1 = gm3 + go3; R1 = 1/G1;
+
+Go = G1 + G2;
+Ro = 1/Go
+</pre><pre class="codeoutput">
+======= Ro =======
+Ro =
+     1.1767e+003
+</pre><h2 id="7">Summary for Cadence</h2><pre class="codeinput">Print_Header(<span class="string">"Summary of Information for Cadence"</span>)
+Print_Header(<span class="string">"Transistor Widths in &micro;m"</span>)
+
+Transistor_Widths_Microns = [W1*10e5; W2*10e5; W3*10e5; W4*10e5; W5*10e5];
+
+<span class="keyword">for</span> i = 1:5
+    fprintf(<span class="string">'Q%i = %i\n'</span>, i, Transistor_Widths_Microns(i))
+<span class="keyword">end</span>
+
+Print_Header(<span class="string">"Resistor R in kilo ohms"</span>)
+
+fprintf(<span class="string">'R = %i\n'</span>, R/1000)
+</pre><pre class="codeoutput">
+======= Summary of Information for Cadence =======
+
+======= Transistor Widths in &micro;m =======
+Q1 = 58
+Q2 = 58
+Q3 = 200
+Q4 = 200
+Q5 = 58
+
+======= Resistor R in kilo ohms =======
+R = 80
+</pre><h2 id="8">Summary</h2><pre class="codeinput">Print_Header(<span class="string">"Summary of Results and Other Information"</span>)
+Print_Header(<span class="string">"Gain Information in dB"</span>)
+
+fprintf(<span class="string">'Av1      = %f\n'</span>, Av1_dB)
+fprintf(<span class="string">'Av2      = %f\n'</span>, Av2_dB)
+fprintf(<span class="string">'Av       = %f\n'</span>, Av_dB)
+fprintf(<span class="string">'|Avo-Av| = %f\n'</span>, Gain_Delta)
+
+Print_Header(<span class="string">"DC VI Component in V"</span>)
+
+VS1 = mVSS;
+VG1 = Vov1 + VS1 + Vtn; VI = VG1;
+
+fprintf(<span class="string">'VI = %f\n'</span>, VI)
+</pre><pre class="codeoutput">
+======= Summary of Results and Other Information =======
+
+======= Gain Information in dB =======
+Av1      = 45.086918
+Av2      = -0.976016
+Av       = 44.110902
+|Avo-Av| = 0.976016
+
+======= DC VI Component in V =======
+VI = -1.447720
+</pre><h2 id="9">Leftover DC Voltages and Small Signal Parameters</h2><pre class="codeinput">Print_Header(<span class="string">"Leftover Values"</span>)
+
+VG5 = VDD - abs(Vov5) - abs(Vtp)
+
+VG3 = 0 - abs(Vov3) - abs(Vtp)
+
+gm_calc = [gm1;
+           2*ID2/Vov2;
+           gm3;
+           2*ID4/Vov4;
+           2*ID5/Vov5]
+
+go_calc = [go1;
+           go2;
+           go3;
+           go4;
+           Lambdap*ID5];
+
+ro_calc = 1./go_calc
+</pre><pre class="codeoutput">
+======= Leftover Values =======
+VG5 =
+     1.3024e+000
+VG3 =
+    -1.1976e+000
+gm_calc =
+   370.9204e-006
+   243.8522e-006
+   840.8696e-006
+   840.8696e-006
+   243.8522e-006
+ro_calc =
+     1.2981e+006
+   772.3743e+003
+   223.9885e+003
+   223.9885e+003
+   772.3743e+003
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Katelyn Charbonneau
+%EE320 Spring 2018 Project 1 Iteration 3
+
+clear
+clc
+
+format shortEng
+format compact
+
+load("Constants.mat")
+load("Iteration2.mat")
+
+%% Third Iterations
+
+a = R*kp*(W5/L)/2;
+b = 1;
+c = -VDD-VSS+abs(Vtp);
+
+Vov5 = VovQuad(a,b,c)
+ID5 = kp*(W5/L)/2*Vov5^2
+
+%% Other Current and Vov Values
+% Because W5 = W1 = W2, the branches will have the same current
+
+Print_Header("ID1/2 and Vov1/2")
+
+ID1 = ID5
+ID2 = ID5
+
+Vov1 = sqrt((2*ID1)/(kn*(W1/L)))
+Vov2 = sqrt((2*ID2)/(kp*(W2/L)))
+
+% Use the Ratio of W3/4 : W5
+
+Print_Header("ID3/4 and Vov3/4")
+
+WidthRatio = W3/W5;
+
+Vov4 = Vov2
+ID4 = kp*(W4/L)/2*Vov4^2
+
+ID3 = ID4
+
+Vov3 = sqrt((2*ID3)/(kp*(W3/L)))
+
+
+%% Power Calculations - Third Iteration
+
+Print_Header("Power Consumption - Third Iteration")
+
+TotalCurrent = ID1+ID3+ID5
+PowerConsumed = TotalCurrent*(VDD+VSS)
+
+Print_Header("Third Iteration Gain")
+
+%% Calculate the gains again with new IDs and Vovs
+
+gm1 = 2*ID1/Vov1;
+go1 = Lambdan*ID1;
+go2 = Lambdap*ID2;
+GD1 = go2;
+Go1 = go1 + GD1;
+
+Gm1 = -gm1;
+
+Av1 = Gm1/Go1
+Av1_dB = Convert_to_dB(Av1)
+
+Print_Header("Stage 2 Gain")
+
+gm3 = 2*ID3/Vov3;
+
+Av2 = gm3/(gm3+GL)
+Av2_dB = Convert_to_dB(Av2)
+
+Print_Header("Gain of Both Stages")
+
+Av = Av1*Av2
+Av_dB = Convert_to_dB(Av)
+
+Print_Header("Difference between Avo and Av")
+
+Gain_Delta = Av1_dB - Av_dB
+
+%% Output Resistance
+
+Print_Header("Ro")
+
+go4 = Lambdap*ID4; go3 = Lambdap*ID3;
+ro4 = 1/go4; ro3 = 1/go3;
+
+R2 = ro4; G2 = 1/R2;
+G1 = gm3 + go3; R1 = 1/G1;
+
+Go = G1 + G2;
+Ro = 1/Go
+
+%% Summary for Cadence
+
+Print_Header("Summary of Information for Cadence")
+Print_Header("Transistor Widths in µm")
+
+Transistor_Widths_Microns = [W1*10e5; W2*10e5; W3*10e5; W4*10e5; W5*10e5];
+
+for i = 1:5
+    fprintf('Q%i = %i\n', i, Transistor_Widths_Microns(i))
+end
+
+Print_Header("Resistor R in kilo ohms")
+
+fprintf('R = %i\n', R/1000)
+
+%% Summary
+Print_Header("Summary of Results and Other Information")
+Print_Header("Gain Information in dB")
+
+fprintf('Av1      = %f\n', Av1_dB)
+fprintf('Av2      = %f\n', Av2_dB)
+fprintf('Av       = %f\n', Av_dB)
+fprintf('|Avo-Av| = %f\n', Gain_Delta)
+
+Print_Header("DC VI Component in V")
+
+VS1 = mVSS;
+VG1 = Vov1 + VS1 + Vtn; VI = VG1;
+
+fprintf('VI = %f\n', VI)
+
+%% Leftover DC Voltages and Small Signal Parameters
+
+Print_Header("Leftover Values")
+
+VG5 = VDD - abs(Vov5) - abs(Vtp)
+
+VG3 = 0 - abs(Vov3) - abs(Vtp)
+
+gm_calc = [gm1;
+           2*ID2/Vov2;
+           gm3;
+           2*ID4/Vov4;
+           2*ID5/Vov5]
+
+go_calc = [go1;
+           go2;
+           go3;
+           go4;
+           Lambdap*ID5];
+
+ro_calc = 1./go_calc
+##### SOURCE END #####
+--></body></html>

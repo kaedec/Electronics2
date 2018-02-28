@@ -58,6 +58,9 @@ Print_Header("Third Iteration Gain")
 gm1 = 2*ID1/Vov1;
 go1 = Lambdan*ID1;
 go2 = Lambdap*ID2;
+go4 = Lambdap*ID4; go3 = Lambdap*ID3;
+ro4 = 1/go4; ro3 = 1/go3;
+
 GD1 = go2;
 Go1 = go1 + GD1;
 
@@ -70,7 +73,7 @@ Print_Header("Stage 2 Gain")
 
 gm3 = 2*ID3/Vov3;
 
-Av2 = gm3/(gm3+GL)
+Av2 = gm3/(gm3+go3+go4+GL)
 Av2_dB = Convert_to_dB(Av2)
 
 Print_Header("Gain of Both Stages")
@@ -85,9 +88,6 @@ Gain_Delta = Av1_dB - Av_dB
 %% Output Resistance
 
 Print_Header("Ro")
-
-go4 = Lambdap*ID4; go3 = Lambdap*ID3;
-ro4 = 1/go4; ro3 = 1/go3;
 
 R2 = ro4; G2 = 1/R2;
 G1 = gm3 + go3; R1 = 1/G1;

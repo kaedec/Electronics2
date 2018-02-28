@@ -62,7 +62,7 @@ Print_Header("ID3")
 %   gm3 should be at least an order of magnitude larger than GL to
 %   mitigate the effects of loading - but not so large that other
 %   parameters fall out of the required specifications
-gm3 = 10*GL;
+gm3 = 15*GL;
 ID3 = gm3*abs(Vov3)/2
 
 Print_Header("Stage 2 Gain")

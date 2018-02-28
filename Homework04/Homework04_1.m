@@ -50,16 +50,39 @@ VG1 = Vov1 + Vtn
 
 Print_Header("gm and ro/go")
 
-gm_calc = [2*ID1/Vov1;
-           2*ID2/Vov2;
-           2*ID3/Vov3;
-           2*ID4/Vov4;
-           2*ID5/Vov5]
+gm = [2*ID1/Vov1;
+      2*ID2/Vov2;
+      2*ID3/Vov3;
+      2*ID4/Vov4;
+      2*ID5/Vov5]
 
-go_calc = [Lambdan*ID1;
-           Lambdap*ID2;
-           Lambdap*ID3;
-           Lambdap*ID4;
-           Lambdap*ID5];
+go = [Lambdan*ID1;
+      Lambdap*ID2;
+      Lambdap*ID3;
+      Lambdap*ID4;
+      Lambdap*ID5];
 
-ro_calc = 1./go_calc
+ro = 1./go
+
+%% AC Analysis
+
+Print_Header("Av1")
+
+GD1 = go(2);
+Av1 = -gm(1)/(go(1)+go(2))
+Av1_dB = Convert_to_dB(Av1)
+
+Print_Header("Av2")
+Av2 = gm(3)/(gm(3)+go(3)+go(4)+GL)
+Av2_dB = Convert_to_dB(Av2)
+
+Print_Header("Av")
+Av = Av1*Av2
+Av_dB = Convert_to_dB(Av)
+
+Print_Header("Av1-Av")
+Gain_Delta = Av1_dB-Av_dB
+
+Print_Header("Ro")
+Go = gm(3)+go(3)+go(4);
+Ro = 1/Go
