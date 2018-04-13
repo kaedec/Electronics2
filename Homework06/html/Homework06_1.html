@@ -1,0 +1,340 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Homework06_1</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-03-27"><meta name="DC.source" content="Homework06_1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Constant declarations</a></li><li><a href="#3">Part A.1</a></li><li><a href="#4">Part A.2</a></li><li><a href="#5">Part B.1</a></li><li><a href="#6">Part B.2</a></li><li><a href="#7">Part C</a></li></ul></div><pre class="codeinput"><span class="comment">%Katelyn Charbonneau</span>
+<span class="comment">%EE320 Homework 06 Question 1</span>
+
+clear
+clc
+
+format <span class="string">shortEng</span>
+format <span class="string">compact</span>
+</pre><h2 id="2">Constant declarations</h2><pre class="codeinput">VDD = 10; vo = 5;
+CC = 0.022e-6;
+C1 = 10e-12; C2 = 3.3e-12; C3 = 37e-12;
+C4 = 3.3e-12; C5 = 22e-12;
+R = 15e3; RL = 10e6; RG = 100e3; Rsig = 100e3;
+G = 1/R; GL = 1/RL; GG = 1/RG; Gsig = 1/Rsig;
+Kn = 270e-6; Vtn = 0.573; Lambdan = 0.0165;
+Kp = 88e-6; Vtp = -0.647; Lambdap = 0.0219;
+</pre><h2 id="3">Part A.1</h2><pre class="codeinput"><span class="comment">%DC Values</span>
+
+Print_Header(<span class="string">"Vov3 and ID3"</span>)
+a = R*Kp; b = 1; c = abs(Vtp)-VDD;
+Vov3 = VovQuad(a,b,c)
+ID3 = Kp*Vov3^2
+ID2 = ID3; ID1 = ID2;
+
+Print_Header(<span class="string">"Vov2/1 and VGG"</span>)
+Vov2 = sqrt(ID2/Kp)
+Vov1 = sqrt(ID1/Kn)
+VGG = Vov1+Vtn
+
+Print_Header(<span class="string">"Q3 Node Voltages"</span>)
+VG3 = ID3*R;
+VS3 = VDD;
+VD3 = VG3;
+VSD3 = VS3 - VD3;
+VSG3 = VS3 - VG3;
+
+Print_Header(<span class="string">"Q2 Node Voltages"</span>)
+VG2 = VG3;
+VS2 = VDD;
+VD2 = vo;
+VSD2 = VS2 - VD2;
+VSG2 = VS2 - VG2;
+
+Print_Header(<span class="string">"Q1 Node Voltages"</span>)
+VG1 = VGG;
+VS1 = 0;
+VD1 = vo;
+VDS1 = VD1 - VS1;
+VGS1 = VG1 - VS1;
+</pre><pre class="codeoutput">
+======= Vov3 and ID3 =======
+Vov3 =
+     2.3099e+000
+ID3 =
+   469.5395e-006
+
+======= Vov2/1 and VGG =======
+Vov2 =
+     2.3099e+000
+Vov1 =
+     1.3187e+000
+VGG =
+     1.8917e+000
+
+======= Q3 Node Voltages =======
+
+======= Q2 Node Voltages =======
+
+======= Q1 Node Voltages =======
+</pre><h2 id="4">Part A.2</h2><p>Small-signal Parameters</p><pre class="codeinput">gm1 = 2*ID1/Vov1;
+gm2 = 2*ID2/abs(Vov2);
+gm3 = 2*ID3/abs(Vov3);
+go1 = Lambdan*ID1; ro1 = 1/go1;
+go2 = Lambdap*ID2; ro2 = 1/go2;
+go3 = Lambdap*ID3; ro3 = 1/go3;
+</pre><h2 id="5">Part B.1</h2><pre class="codeinput"><span class="comment">%Gv(Mid)</span>
+
+Print_Header(<span class="string">"Gv(mid)"</span>)
+RG_Prime = RG+Rsig;
+GG_Prime = 1/RG_Prime;
+GD = go1 + go2 + GL;
+RD = 1/GD;
+
+Gv_mid = (GG_Prime * gm1) / (GG * GD)
+Gv_mid_dB = Convert_to_dB(Gv_mid)
+</pre><pre class="codeoutput">
+======= Gv(mid) =======
+Gv_mid =
+    19.6387e+000
+Gv_mid_dB =
+    25.8623e+000
+</pre><h2 id="6">Part B.2</h2><p>fH and fL</p><pre class="codeinput">Print_Header(<span class="string">"fL"</span>)
+
+G1inf_L = (GG*Gsig)/(GG+Gsig);
+G2inf_L = ((go1+go2)*GL)/(go1+go2+GL);
+T1inf_L = CC/G1inf_L;
+T2inf_L = CC/G2inf_L;
+
+Tau_L = (1/T1inf_L) + (1/T2inf_L);
+Tau_L = 1/Tau_L;
+fL = 1/(2*pi*Tau_L)
+
+Print_Header(<span class="string">"fH"</span>)
+
+G10_H = GG+Gsig;
+G20_H = ((go1 + go2 + GL) * (GG + Gsig)) / (gm1 + go1 + go2 + GL + GG + Gsig);
+G30_H = go1 + go2 + GL;
+G40_H = ((go1 + go2 + GL) * (gm3 + go3 + G)) / (gm2 + gm3 + go1 + go2 + go3 + G + GL);
+G50_H = gm3 + go3 + G;
+
+T10_H = C1/G10_H; T20_H = C2/G20_H;
+T30_H = C3/G30_H; T40_H = C4/G40_H;
+T50_H = C5/G50_H;
+
+b1_H = T10_H + T20_H + T30_H + T40_H + T50_H;
+fH = 1/(2*pi*b1_H)
+</pre><pre class="codeoutput">
+======= fL =======
+fL =
+    36.8910e+000
+
+======= fH =======
+fH =
+    16.3136e+003
+</pre><h2 id="7">Part C</h2><p>Transfer Function and Plotting</p><pre class="codeinput">f_calc_axis = logspace(1, 5, 401)';
+s = 2*j*pi.*f_calc_axis;
+wH = 2*pi*fH;
+wL = 2*pi*fL;
+
+Gv_s = (Gv_mid) ./ ( (1 + s./wH) .* (1 + wL./s) );
+Gv_s_dB = 20*log10(abs(Gv_s));
+
+figure(1)
+sim_dB = csvread(<span class="string">"gain_dB.csv"</span>);
+semilogx(sim_dB(:,1), abs(sim_dB(:,2)))
+hold <span class="string">on</span>
+semilogx(f_calc_axis, abs(Gv_s_dB), <span class="string">'--'</span>)
+title(<span class="string">"Calculated Compared to Simulated Gain in dB"</span>)
+xlabel(<span class="string">"Frequency (Hz)"</span>)
+ylabel(<span class="string">"Voltage Gain (dB)"</span>)
+legend(<span class="string">"Simulated Voltage Gain"</span>, <span class="string">"Calculated Voltage Gain"</span>,<span class="string">'location'</span>,<span class="string">'south'</span>)
+grid <span class="string">on</span>
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="Homework06_1_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Katelyn Charbonneau
+%EE320 Homework 06 Question 1
+
+clear
+clc
+
+format shortEng
+format compact
+
+%% Constant declarations
+VDD = 10; vo = 5;
+CC = 0.022e-6;
+C1 = 10e-12; C2 = 3.3e-12; C3 = 37e-12;
+C4 = 3.3e-12; C5 = 22e-12;
+R = 15e3; RL = 10e6; RG = 100e3; Rsig = 100e3;
+G = 1/R; GL = 1/RL; GG = 1/RG; Gsig = 1/Rsig;
+Kn = 270e-6; Vtn = 0.573; Lambdan = 0.0165;
+Kp = 88e-6; Vtp = -0.647; Lambdap = 0.0219;
+
+%% Part A.1
+%DC Values 
+
+Print_Header("Vov3 and ID3")
+a = R*Kp; b = 1; c = abs(Vtp)-VDD;
+Vov3 = VovQuad(a,b,c)
+ID3 = Kp*Vov3^2
+ID2 = ID3; ID1 = ID2;
+
+Print_Header("Vov2/1 and VGG")
+Vov2 = sqrt(ID2/Kp)
+Vov1 = sqrt(ID1/Kn)
+VGG = Vov1+Vtn
+
+Print_Header("Q3 Node Voltages")
+VG3 = ID3*R;
+VS3 = VDD;
+VD3 = VG3;
+VSD3 = VS3 - VD3;
+VSG3 = VS3 - VG3;
+
+Print_Header("Q2 Node Voltages")
+VG2 = VG3;
+VS2 = VDD;
+VD2 = vo;
+VSD2 = VS2 - VD2;
+VSG2 = VS2 - VG2;
+
+Print_Header("Q1 Node Voltages")
+VG1 = VGG;
+VS1 = 0;
+VD1 = vo;
+VDS1 = VD1 - VS1;
+VGS1 = VG1 - VS1;
+
+%% Part A.2
+% Small-signal Parameters
+
+gm1 = 2*ID1/Vov1;
+gm2 = 2*ID2/abs(Vov2);
+gm3 = 2*ID3/abs(Vov3);
+go1 = Lambdan*ID1; ro1 = 1/go1;
+go2 = Lambdap*ID2; ro2 = 1/go2;
+go3 = Lambdap*ID3; ro3 = 1/go3;
+%% Part B.1
+%Gv(Mid)
+
+Print_Header("Gv(mid)")
+RG_Prime = RG+Rsig;
+GG_Prime = 1/RG_Prime;
+GD = go1 + go2 + GL;
+RD = 1/GD;
+
+Gv_mid = (GG_Prime * gm1) / (GG * GD)
+Gv_mid_dB = Convert_to_dB(Gv_mid)
+
+%% Part B.2
+% fH and fL
+Print_Header("fL")
+
+G1inf_L = (GG*Gsig)/(GG+Gsig);
+G2inf_L = ((go1+go2)*GL)/(go1+go2+GL);
+T1inf_L = CC/G1inf_L;
+T2inf_L = CC/G2inf_L;
+
+Tau_L = (1/T1inf_L) + (1/T2inf_L);
+Tau_L = 1/Tau_L;
+fL = 1/(2*pi*Tau_L)
+
+Print_Header("fH")
+
+G10_H = GG+Gsig;
+G20_H = ((go1 + go2 + GL) * (GG + Gsig)) / (gm1 + go1 + go2 + GL + GG + Gsig);
+G30_H = go1 + go2 + GL;
+G40_H = ((go1 + go2 + GL) * (gm3 + go3 + G)) / (gm2 + gm3 + go1 + go2 + go3 + G + GL);
+G50_H = gm3 + go3 + G;
+
+T10_H = C1/G10_H; T20_H = C2/G20_H;
+T30_H = C3/G30_H; T40_H = C4/G40_H;
+T50_H = C5/G50_H;
+
+b1_H = T10_H + T20_H + T30_H + T40_H + T50_H;
+fH = 1/(2*pi*b1_H)
+
+%% Part C
+% Transfer Function and Plotting
+
+f_calc_axis = logspace(1, 5, 401)';
+s = 2*j*pi.*f_calc_axis;
+wH = 2*pi*fH;
+wL = 2*pi*fL;
+
+Gv_s = (Gv_mid) ./ ( (1 + s./wH) .* (1 + wL./s) );
+Gv_s_dB = 20*log10(abs(Gv_s));
+
+figure(1)
+sim_dB = csvread("gain_dB.csv");
+semilogx(sim_dB(:,1), abs(sim_dB(:,2)))
+hold on
+semilogx(f_calc_axis, abs(Gv_s_dB), 'REPLACE_WITH_DASH_DASH')
+title("Calculated Compared to Simulated Gain in dB")
+xlabel("Frequency (Hz)")
+ylabel("Voltage Gain (dB)")
+legend("Simulated Voltage Gain", "Calculated Voltage Gain",'location','south')
+grid on
+hold off
+##### SOURCE END #####
+--></body></html>

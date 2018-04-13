@@ -39,7 +39,7 @@ Vov1 = sqrt(ID1/Kn)
 Print_Header("Vov3/4 and ID4/4")
 
 ID4 = 2*ID5; ID3 = ID4
-Vov4 = Vov5;
+Vov4 = Vov5
 Vov3 = sqrt(ID5/(2*Kp))
 
 Print_Header("VG5/3/1")
