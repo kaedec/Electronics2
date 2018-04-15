@@ -1,10 +1,18 @@
+clear
+clc
+
 VDD = 2.5;
 VSS = 2.5;
 mVSS = -2.5;
 VO = 0;
+MOStype = [0 0 1 1 0 1 0 0]; % 1 is nmos
 
 IREF = 50e-6;
 PDC_Max = 0.8e-3;
+ITotal = PDC_Max/5;
+
+Av_min_dB = 85;
+Av_min = 10^(Av_min_dB/20);
 
 Lambda_nmos = 1.6208e-2;
 Lambda_pmos = 2.724e-2;
