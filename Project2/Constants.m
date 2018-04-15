@@ -30,16 +30,16 @@ L = 2e-6;
 
 CL = 1.5e-12;
 
-Cox = 804.9262;
+Cox = 804.9262e-6;
 
-Cgbo_nmos = 382.75;
-Cgbo_pmos = 405.4;
+Cgbo_nmos = 382.75e-12;
+Cgbo_pmos = 405.4e-12;
 
-Cgdo_nmos = 301.85;
-Cgdo_pmos = 301.85;
+Cgdo_nmos = 301.85e-12;
+Cgdo_pmos = 301.85e-12;
 
-Cgso_nmos = 301.85;
-Cgso_pmos = 301.85;
+Cgso_nmos = 301.85e-12;
+Cgso_pmos = 301.85e-12;
 
 MJ_nmos = 0.6306;
 MJ_pmos = 0.5353;
@@ -47,11 +47,11 @@ MJ_pmos = 0.5353;
 MJSW_nmos = 0.315;
 MJSW_pmos = 0.253;
 
-CJ_nmos = 101.59;
-CJ_pmos = 238.37;
+CJ_nmos = 101.59e-6;
+CJ_pmos = 238.37e-6;
 
-CJSW_nmos = 474.4;
-CJSW_pmos = 276;
+CJSW_nmos = 474.4e-12;
+CJSW_pmos = 276e-12;
 
 Phi_B = 0.8;
 
