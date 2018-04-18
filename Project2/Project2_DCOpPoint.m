@@ -1,3 +1,9 @@
+% This file calculates the DC operating point of the amplifier.  This
+% includes node voltages, drain to source voltages, and gate to source
+% voltages for each transistor.  It also calculates the amount of power
+% consumed by the amplifier, the minimum and maximum common source input
+% voltages, and the allowable output swing
+
 %Katelyn Charbonneau
 %EE320 Project 2 DC Operating Point
 
@@ -10,7 +16,7 @@ format compact
 load("Constants.mat")
 load("Part2.mat")
 
-% This file calculates the DC Operating Point of the circuit
+%% DC Operating Point
 
 VS(3:4) = mVSS; VS(6) = mVSS;
 VS(5) = VDD; VS(7:8) = VDD;
@@ -46,6 +52,7 @@ for i = 1:8
     VDS(i) = VD(i) - VS(i);
 end
 
+Print_Header("Voltages")
 
 VD
 VS
@@ -53,5 +60,21 @@ VG
 VGS
 VDS
 VDB = VDS;
+
+Print_Header("Power")
+
+ITotal = ID(8) + ID(5) + ID(6)
+PDC = ITotal * 5
+
+Print_Header("Vicm Max/Min")
+
+Vicm_max = VDD - abs(Vov(5)) - abs(Vtp) - abs(Vov(1))
+Vicm_min = mVSS + Vtn + Vov(3) - abs(Vtp)
+
+Print_Header("vO Max/Min")
+
+vO_max = VDD - abs(Vov(7))
+vO_min = mVSS + Vov(6)
+
 % Save the variables - continued in Project2_Calc_Dump.m
 save("DCOpPoint.mat")

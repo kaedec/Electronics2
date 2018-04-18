@@ -1,3 +1,7 @@
+% This file has no output - it simply calculates the transistor area,
+% perimeter, and the values for the high frequency parasitic capacitors in
+% each transistor
+
 %Katelyn Charbonneau
 %EE320 Project 2 Calc Dump
 
@@ -9,9 +13,6 @@ format compact
 
 load("Constants.mat")
 load("DCOpPoint.mat")
-
-% This file has no output - it simply calculates likes like area,
-% perimeter, high frequency capacitors, etc.
 
 % Area/Perimeter
 for i = 1:8

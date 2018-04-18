@@ -1,3 +1,8 @@
+% This file is the beginning of a project analyzing a two stage CMOS
+% operational transconductance amplifier.  The purpose of the calculations
+% in this file is to design values of the transistor widths that will
+% satisfy all specifications
+
 %Katelyn Charbonneau
 %EE320 Project 2 Part 1
 
@@ -39,7 +44,8 @@ for i = 1:8
 end
 go = 1./ro;
 
-% Calculate the (differential mode) gain with these guessed values
+% Calculate the (differential mode) gain with these guessed values - this
+% is pretty much just to ensure that the design meets the gain spec so far
 Print_Header("Iteration 1 Gain")
 
 Gm1 = gm(1);

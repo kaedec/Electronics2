@@ -1,3 +1,8 @@
+% This file uses the transistor widths calculated in the previous file to
+% calculate values for overdrive voltages, drain currents, and gains.  The
+% differential and common mode gains and the common mode rejection ratio
+% are calculated here
+
 %Katelyn Charbonneau
 %EE320 Project 2 Part 2
 
@@ -13,7 +18,7 @@ load("Part1.mat")
 %% New Vovs and IDs
 
 % Calculate new Vovs and IDs using the selected transistor widths
-Print_Header("Recalculated Vovs/IDs:")
+Print_Header("Recalculated Vovs/IDs")
 
 Vov(8) = sqrt((2 * ID(8) * L) / (kp * W(8)));
 
@@ -50,6 +55,9 @@ for i = 1:8
     end
 end
 go = 1./ro;
+
+gm;
+ro;
 
 % Recalculate the gains
 Print_Header("Differential Mode Gain")
